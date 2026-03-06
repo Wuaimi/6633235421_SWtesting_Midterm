@@ -49,5 +49,5 @@ test("Verify user can submit form with all valid data", async ({ page }) => {
   // Verify modal
   await expect(page.getByText("Thanks for submitting the form")).toBeVisible();
 
-  await page.waitForTimeout(5000);
+  await page.waitForTimeout(500);
 });

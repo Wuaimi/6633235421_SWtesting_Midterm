@@ -33,5 +33,5 @@ test("Verify user can add/remove subject tag", async ({ page }) => {
     page.locator(".subjects-auto-complete__multi-value"),
   ).toHaveCount(2);
 
-  await page.waitForTimeout(5000);
+  await page.waitForTimeout(500);
 });

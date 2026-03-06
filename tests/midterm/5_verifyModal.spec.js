@@ -99,5 +99,5 @@ test("Verify Submit Modal data", async ({ page }) => {
   ).toContainText("Uttar Pradesh Lucknow");
 
   // Delay 5 seconds before closing
-  await page.waitForTimeout(5000);
+  await page.waitForTimeout(500);
 });

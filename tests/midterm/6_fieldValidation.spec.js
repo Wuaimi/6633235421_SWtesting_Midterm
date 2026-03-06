@@ -94,25 +94,37 @@ test.describe("Field Validation", () => {
     expect(valid).toBeFalsy();
   });
 
-  test("6.3 Date of Birth default value and calendar selection", async ({
-    page,
-  }) => {
+ test("6.3 Date of Birth should default to current system date", async ({ page }) => {
     await page.goto("https://demoqa.com/automation-practice-form");
 
     const dob = page.locator("#dateOfBirthInput");
 
-    const defaultDate = await dob.inputValue();
-    expect(defaultDate).not.toBe("");
+    const today = new Date();
+    const day = String(today.getDate()).padStart(2, "0");
+    const month = today.toLocaleString("en-US", { month: "short" });
+    const year = today.getFullYear();
+
+    const expectedDate = `${day} ${month} ${year}`;
+
+    await expect(dob).toHaveValue(expectedDate);
+  });
+
+
+  test("6.3.2 Date of Birth should allow selection via calendar widget", async ({ page }) => {
+    await page.goto("https://demoqa.com/automation-practice-form");
+
+    const dob = page.locator("#dateOfBirthInput");
 
     await dob.click();
+
     await page.locator(".react-datepicker__year-select").selectOption("2012");
     await page.locator(".react-datepicker__month-select").selectOption("March");
+
     await page
-      .locator(
-        ".react-datepicker__day--006:not(.react-datepicker__day--outside-month)",
-      )
+      .locator(".react-datepicker__day--006:not(.react-datepicker__day--outside-month)")
       .click();
 
     await expect(dob).toHaveValue("06 Mar 2012");
   });
+
 });
