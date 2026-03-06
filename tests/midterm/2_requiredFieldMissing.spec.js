@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 
-test("Verify form cannot submit when required fields are empty (all fields missing)", async ({
+test("2.1 Verify form cannot submit when required fields are empty (all fields missing)", async ({
   page,
 }) => {
   await page.goto("https://demoqa.com/automation-practice-form");
@@ -14,13 +14,13 @@ test("Verify form cannot submit when required fields are empty (all fields missi
   ).not.toBeVisible();
 });
 
-test("Verify form cannot submit when required fields are empty (first name missing)", async ({
+test("2.2 Verify form cannot submit when required fields are empty (first name missing)", async ({
   page,
 }) => {
   await page.goto("https://demoqa.com/automation-practice-form");
 
   await page.locator("#lastName").fill("Doe");
-  await page.locator("#userEmail").fill("JohnDoe@gmail.com");
+  await page.locator("#userNumber").fill("0123456789");
   await page.locator("label[for='gender-radio-1']").click();
 
   await page.locator("#submit").click();
@@ -30,13 +30,13 @@ test("Verify form cannot submit when required fields are empty (first name missi
   ).not.toBeVisible();
 });
 
-test("Verify form cannot submit when required fields are empty (last name missing)", async ({
+test("2.3 Verify form cannot submit when required fields are empty (last name missing)", async ({
   page,
 }) => {
   await page.goto("https://demoqa.com/automation-practice-form");
 
   await page.locator("#firstName").fill("John");
-  await page.locator("#userEmail").fill("JohnDoe@gmail.com");
+  await page.locator("#userNumber").fill("0123456789");
   await page.locator("label[for='gender-radio-1']").click();
   await page.locator("#submit").click();
 
@@ -44,3 +44,33 @@ test("Verify form cannot submit when required fields are empty (last name missin
     page.getByText("Thanks for submitting the form"),
   ).not.toBeVisible();
 });
+
+test("2.4 Verify form cannot submit when required fields are empty (Gender missing)", async ({
+  page,
+}) => {
+  await page.goto("https://demoqa.com/automation-practice-form");
+
+  await page.locator("#firstName").fill("John");
+  await page.locator("#lastName").fill("Doe");
+  await page.locator("#userNumber").fill("0123456789");
+  await page.locator("#submit").click();
+
+  await expect(
+    page.getByText("Thanks for submitting the form"),
+  ).not.toBeVisible();
+});
+
+test("2.5 Verify form cannot submit when required fields are empty (Mobile missing)", async ({
+    page,
+    }) => {
+    await page.goto("https://demoqa.com/automation-practice-form");
+
+    await page.locator("#firstName").fill("John");
+    await page.locator("#lastName").fill("Doe");
+    await page.locator("label[for='gender-radio-1']").click();
+    await page.locator("#submit").click();
+
+    await expect(
+      page.getByText("Thanks for submitting the form"),
+    ).not.toBeVisible();
+  });

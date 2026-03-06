@@ -24,7 +24,7 @@ test("Verify user can submit form with all valid data", async ({ page }) => {
 
   // Subjects เป็น Autocomplete ถึงแม้จะพิมพ์ไม่ครบ แต่ก็ควรจะต้องเลือกได้เอง
   await page.locator("#subjectsInput").fill("ma");
-  await page.keyboard.press("Enter");
+  await page.getByText("Maths", { exact: true }).click();
 
   // Hobbies เลือกช้อยส์แรก
   await page.locator("label[for='hobbies-checkbox-1']").click();
@@ -43,7 +43,7 @@ test("Verify user can submit form with all valid data", async ({ page }) => {
   await page.locator("#city").click();
   await page.getByText("Lucknow").click();
 
-  // Press Submut button
+  // Press Submit button
   await page.locator("#submit").click();
 
   // Verify modal
