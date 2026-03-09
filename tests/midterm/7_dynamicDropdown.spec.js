@@ -1,12 +1,14 @@
 import { test, expect } from "@playwright/test";
 
 test.describe("Dynamic Dropdown Validation", () => {
-  test("7.1 City dropdown should be empty before State is selected", async ({
+  test("7.1 City dropdown should be disabled before State is selected", async ({
     page,
   }) => {
     await page.goto("https://demoqa.com/automation-practice-form");
 
-    await expect(page.locator("#city")).toContainText("Select City");
+    const cityDropdown = page.locator("#city .css-16xfy0z-control");
+
+    await expect(cityDropdown).toHaveAttribute("aria-disabled", "true");
   });
 
   test("7.2 City dropdown shows correct cities after selecting State", async ({
